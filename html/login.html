@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ログイン</title>
+    <link rel="stylesheet" href="../css/index.css" />
+</head>
+
+<body>
+    <header>
+        <div class="searchBar">
+            <input type="text" placeholder="ブログ" />
+            <button>検索</button>
+        </div>
+        <div class="title">ブログシステム</div>
+        <div class="menu">
+            <a href="">ブログ一覧</a>
+            <a href="">ブログ編集</a>
+            <a href="">自己紹介</a>
+            <a href="">ログアウト</a>
+        </div>
+    </header>
+
+    <h2>ログイン</h2>
+
+    <form th:action="@{/login}" method="post">
+        <table>
+            <tr>
+                <th>メール</th>
+                <td><input type="text" name="email" /></td>
+            </tr>
+            <tr>
+                <th>パスワード</th>
+                <td><input type="password" name="password" /></td>
+            </tr>
+        </table>
+        <button type="submit">ログイン</button>
+    </form>
+    <p th:if="${error}" class="error">メールやパスワードは間違っています。</p>
+    <script src="./login.js"></script>
+</body>
+
+</html>
