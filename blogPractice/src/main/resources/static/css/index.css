@@ -52,6 +52,7 @@ header {
     display: flex;
     gap: 20px;
     width: 30%;
+    position: relative;
 }
 
 .menu a {
@@ -229,4 +230,10 @@ p.error {
     margin-top: 50px;
     text-align: center;
     color: red;
+}
+
+.menu a.register {
+    position: absolute;
+    right: 30px;
+    top: -12px;
 }

@@ -16,25 +16,23 @@
         </div>
         <div class="title">ブログシステム</div>
         <div class="menu">
-            <a href="">ブログ一覧</a>
+            <a th:href="@{/blogList}">ブログ一覧</a>
             <a href="">ブログ編集</a>
             <a href="">自己紹介</a>
             <a href="">ログアウト</a>
         </div>
     </header>
 
-    <h2>ブログタイトル</h2>
-
-
-
+    <h2 th:text="${blog.title}"></h2>
+	
     <div class="content">
         <p class="subtitle">
-            <span>著者:</span>
-            <span>作成時期:</span>
-            <span>更新時期:</span>
+            <span th:text="'著者: '+${account.username}"></span>
+            <span th:text="'作成時期: '+${blog.createTm}"></span>
+            <span th:text="'更新時期: '+${blog.updateTm}"></span>
         </p>
-        <img src="../img/スクリーンショット 2025-05-01 午後5.56.22.png">
-        <p>コンテント</p>
+        <img th:src="${blog.imgPath}">
+        <p  th:text="${blog.content}"></p>
     </div>
 
     <hr>

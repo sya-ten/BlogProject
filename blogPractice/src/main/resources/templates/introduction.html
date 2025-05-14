@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ブログ一覧</title>
+    <title>自己紹介</title>
     <link rel="stylesheet" href="../css/index.css" />
 </head>
 
@@ -16,32 +16,29 @@
         </div>
         <div class="title">ブログシステム</div>
         <div class="menu">
-            <a href="">ブログ一覧</a>
+            <a th:href="@{/blogList}">ブログ一覧</a>
             <a href="">ブログ編集</a>
             <a href="">自己紹介</a>
             <a href="">ログアウト</a>
         </div>
     </header>
 
-    <h2>ブログ一覧</h2>
+    <h2>自己紹介</h2>
 
-    <div class="blog">
-        <div>
-            <span>タイトル</span>
-            <span>著者</span>
-            <span>作成時期</span>
-        </div>
-        <div>コンテント</div>
-    </div>
-    <div class="blog">
-        <div>
-            <span>タイトル</span>
-            <span>著者</span>
-            <span>作成時期</span>
-        </div>
-        <div>コンテント</div>
-    </div>
+    <form action="" method="post">
+        <p class="introduction">123</p>
+        <!-- <textarea name="content" cols="30" rows="10"></textarea> -->
+        <button>編集</button>
+    </form>
     <script src="./login.js"></script>
 </body>
+<style>
+    .introduction {
+        width: 50%;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+</style>
 
 </html>

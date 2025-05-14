@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>会員登録</title>
+    <title>ブログ登録</title>
     <link rel="stylesheet" href="../css/index.css" />
 </head>
 
@@ -16,34 +16,32 @@
         </div>
         <div class="title">ブログシステム</div>
         <div class="menu">
-            <a href="">ブログ一覧</a>
+            <a th:href="@{/blogList}">ブログ一覧</a>
             <a href="">ブログ編集</a>
             <a href="">自己紹介</a>
             <a href="">ログアウト</a>
         </div>
     </header>
 
-    <h2>会員登録</h2>
+    <h2>ブログ登録</h2>
 
-    <form action="/login/process" method="post">
+    <form th:action="@{blogRegister}" method="post" enctype="multipart/form-data" class="wide-form">
         <table>
             <tr>
-                <th>メール</th>
-                <td><input type="text" name="email" /></td>
+                <th>タイトル</th>
+                <td><input type="text" name="title" /></td>
             </tr>
             <tr>
-                <th>パスワード</th>
-                <td><input type="password" name="password" /></td>
+                <th>写真</th>
+                <td><input type="file" name="img_path"></td>
             </tr>
             <tr>
-                <th>パスワード（確認）</th>
-                <td><input type="password" name="password" /></td>
+                <th>コンテント</th>
+                <td><textarea name="content" cols="30" rows="10"></textarea></td>
             </tr>
         </table>
         <button type="submit">登録</button>
     </form>
-
-    <script src="./login.js"></script>
 </body>
 
 </html>
