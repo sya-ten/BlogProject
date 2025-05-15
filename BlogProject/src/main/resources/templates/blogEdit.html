@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ブログ編集</title>
+    <link rel="stylesheet" href="../css/index.css" />
+</head>
+
+<body>
+    <header>
+		<div class="searchBar">
+					<form th:action="@{/search}" method="get">
+			            <input type="text" placeholder="ブログ" name="title"/>
+			            <button>検索</button>
+					</form>
+		        </div>
+        <div class="title">ブログシステム</div>
+        <div class="menu">
+            <a th:href="@{/blogList}">ブログ一覧</a>
+            <a th:href="@{/blogRegister}">ブログ登録</a>
+            <a href="">自己紹介</a>
+            <a href="">ログアウト</a>
+        </div>
+    </header>
+
+    <h2>ブログ編集</h2>
+
+    <form action="/blogEdit" method="post" enctype="multipart/form-data" class="wide-form inputForm">
+        <table>
+            <tr>
+                <th>タイトル</th>
+                <td><input type="text" name="title" th:value="${blog.title}"/></td>
+            </tr>
+            <tr>
+                <th>写真</th>
+                <td><input type="file" name="img_path" th:value="${blog.imgPath}"></td>
+            </tr>
+            <tr>
+                <th>コンテント</th>
+                <td><textarea name="content" cols="30" rows="10" th:text="${blog.content}"></textarea></td>
+            </tr>
+        </table>
+        <div class="button-group">
+			<button type="submit" name="action" value="update">変更</button>
+			<button type="submit" name="action" value="delete">削除</button>
+        </div>
+    </form>
+
+    <script src="./login.js"></script>
+</body>
+
+</html>

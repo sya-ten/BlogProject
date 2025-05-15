@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>自己紹介</title>
+    <link rel="stylesheet" href="../css/index.css" />
+</head>
+
+<body>
+    <header>
+		<div class="searchBar">
+					<form th:action="@{/search}" method="get">
+			            <input type="text" placeholder="ブログ" name="title"/>
+			            <button>検索</button>
+					</form>
+		        </div>
+        <div class="title">ブログシステム</div>
+        <div class="menu">
+            <a th:href="@{/blogList}">ブログ一覧</a>
+            <a th:href="@{/blogRegister}">ブログ登録</a>
+            <a href="">自己紹介</a>
+            <a href="">ログアウト</a>
+        </div>
+    </header>
+
+    <h2>自己紹介</h2>
+
+    <form action="" method="post"  class="inputForm">
+        <p class="introduction">123</p>
+        <!-- <textarea name="content" cols="30" rows="10"></textarea> -->
+        <button>編集</button>
+    </form>
+    <script src="./login.js"></script>
+</body>
+<style>
+    .introduction {
+        width: 50%;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+</style>
+
+</html>
