@@ -20,18 +20,20 @@
         <div class="menu">
             <a th:href="@{/blogList}">ブログ一覧</a>
             <a th:href="@{/blogRegister}">ブログ登録</a>
-            <a href="">自己紹介</a>
+            <a th:href="@{/introduction}">自己紹介</a>
             <a href="">ログアウト</a>
         </div>
     </header>
 
     <h2>自己紹介</h2>
 
-    <form action="" method="post"  class="inputForm">
-        <p class="introduction">123</p>
-        <!-- <textarea name="content" cols="30" rows="10"></textarea> -->
-        <button>編集</button>
+    <form th:action="@{/introduction/edit}" method="post"  class="inputForm">
+        <p id="introduction" th:if="${edit==false}" class="introduction" th:text="${account.introduction}"></p>
+        <textarea th:if="${edit}" name="content" cols="30" rows="10"></textarea>
     </form>
+	<a th:href="@{/introduction?type=edit}">
+	    <button type="button">編集</button>
+	</a>
     <script src="./login.js"></script>
 </body>
 <style>

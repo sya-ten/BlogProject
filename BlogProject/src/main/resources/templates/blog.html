@@ -20,7 +20,7 @@
         <div class="menu">
             <a th:href="@{/blogList}">ブログ一覧</a>
 			<a th:if="${editable}" th:href="@{/blogEdit?id={id}(id=${blog.blogId})}">ブログ編集</a>
-            <a href="">自己紹介</a>
+            <a th:href="@{/introduction}">自己紹介</a>
             <a href="">ログアウト</a>
         </div>
     </header>

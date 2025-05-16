@@ -16,6 +16,7 @@ public class Account {
 	private String username;
 	private String email;
 	private String password;
+	private String introduction;
 	private Timestamp createTm;
 	
 	public Long getAccountId() {
@@ -41,6 +42,12 @@ public class Account {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getIntroduction() {
+		return introduction;
+	}
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
 	}
 	public Timestamp getCreateTm() {
 		return createTm;
