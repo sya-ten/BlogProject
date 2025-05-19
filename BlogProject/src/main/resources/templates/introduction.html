@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>自己紹介</title>
-    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
 </head>
 
 <body>
@@ -18,10 +18,10 @@
 		        </div>
         <div class="title">ブログシステム</div>
         <div class="menu">
-            <a th:href="@{/blogList}">ブログ一覧</a>
+             <a th:href="@{/blogList?rank=false}">ブログ一覧</a>
             <a th:href="@{/blogRegister}">ブログ登録</a>
-            <a th:href="@{/introduction}">自己紹介</a>
-            <a href="">ログアウト</a>
+            <a th:href="@{/introduction?type=view}">自己紹介</a>
+            <a th:href="@{/logout}">ログアウト</a>
         </div>
     </header>
 
@@ -29,12 +29,14 @@
 
     <form th:action="@{/introduction/edit}" method="post"  class="inputForm">
         <p id="introduction" th:if="${edit==false}" class="introduction" th:text="${account.introduction}"></p>
-        <textarea th:if="${edit}" name="content" cols="30" rows="10"></textarea>
-    </form>
-	<a th:href="@{/introduction?type=edit}">
-	    <button type="button">編集</button>
-	</a>
-    <script src="./login.js"></script>
+        <textarea th:if="${edit}" name="introduction" cols="30" rows="10"></textarea>
+		<button th:if="${edit}" type="submit">確認</button>
+		<a th:if="${edit==false}" th:href="@{'/introduction?type=edit'}">
+		      <button type="button">編集</button>
+		</a>
+	</form>
+	
+    <script th:src="@{js/introduction.js}"></script>
 </body>
 <style>
     .introduction {

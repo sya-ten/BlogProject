@@ -5,6 +5,7 @@ public class BlogModel {
 	private String title;
 	private String content;
 	private String imgPath;
+	private int viewTimes;
 	private String createTm;
 	private String updateTm;
 	
@@ -32,6 +33,12 @@ public class BlogModel {
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
+	public int getViewTimes() {
+		return viewTimes;
+	}
+	public void setViewTimes(int viewTimes) {
+		this.viewTimes = viewTimes;
+	}
 	public String getCreateTm() {
 		return createTm;
 	}
@@ -47,11 +54,12 @@ public class BlogModel {
 	
 	public BlogModel() {
 	}
-	public BlogModel(Long blogId, String title, String content, String imgPath, String createTm, String updateTm) {
+	public BlogModel(Long blogId, String title, String content, String imgPath, int viewTimes, String createTm, String updateTm) {
 		this.blogId = blogId;
 		this.title = title;
 		this.content = content;
 		this.imgPath = imgPath;
+		this.viewTimes = viewTimes;
 		this.createTm = createTm;
 		this.updateTm = updateTm;
 	}

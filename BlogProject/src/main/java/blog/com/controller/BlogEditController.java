@@ -44,7 +44,12 @@ public class BlogEditController {
 	public String getBlogEdit(@RequestParam("id") Long id,
 							  HttpSession session,
 						   	  Model model) {
-		Account account = (Account) session.getAttribute("account");
+		//アカウント情報がないと、ログイン画面に進む
+		Account account = (Account)session.getAttribute("account");
+		if (account==null) {
+			return "redirect:/login";
+		}
+		
 		Blog blog = blogDao.findByBlogId(id);
 		
 		session.setAttribute("blog", blog);
@@ -56,7 +61,7 @@ public class BlogEditController {
 			LocalDateTime updateTm = blog.getUpdateTm().toLocalDateTime();
 			updateTmStr = updateTm.format(formatter);
 		}
-		BlogModel blogModel = new BlogModel(id, blog.getTitle(), blog.getContent(), blog.getImgPath(), createTmStr, updateTmStr);
+		BlogModel blogModel = new BlogModel(id, blog.getTitle(), blog.getContent(), blog.getImgPath(), blog.getViewTimes(), createTmStr, updateTmStr);
 		model.addAttribute("blog", blogModel);
 		
 		return "blogEdit.html";

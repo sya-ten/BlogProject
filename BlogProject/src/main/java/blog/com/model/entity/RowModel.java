@@ -6,6 +6,7 @@ public class RowModel {
 	private Long blogId;
 	private String title;
 	private String content;
+	private int viewTimes;
 	private String createTm;
 	private String author;
 	
@@ -27,6 +28,12 @@ public class RowModel {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public int getViewTimes() {
+		return viewTimes;
+	}
+	public void setViewTimes(int viewTimes) {
+		this.viewTimes = viewTimes;
+	}
 	public String getCreateTm() {
 		return createTm;
 	}
@@ -43,10 +50,11 @@ public class RowModel {
 	
 	public RowModel() {
 	}
-	public RowModel(Long blogId, String title, String content, String createTm, String author) {
+	public RowModel(Long blogId, String title, String content, int viewTimes, String createTm, String author) {
 		this.blogId = blogId;
 		this.title = title;
 		this.content = content;
+		this.viewTimes = viewTimes;
 		this.createTm = createTm;
 		this.author = author;
 	}

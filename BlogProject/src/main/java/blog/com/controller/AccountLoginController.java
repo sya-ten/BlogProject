@@ -46,7 +46,7 @@ public class AccountLoginController {
 		else {
 			session.setAttribute("account", res);
 			model.addAttribute("type", "list");
-			return "redirect:/blogList";
+			return "redirect:/blogList?rank=false";
 		}
 	}
 }

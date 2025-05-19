@@ -21,6 +21,7 @@ public class IntroductionController {
 	public String getIntroduction(@RequestParam("type") String type,
 								  HttpSession session,
 						   		  Model model) {
+		//アカウント情報がないと、ログイン画面に進む
 		Account account = (Account)session.getAttribute("account");
 		if (account==null) {
 			return "redirect:/login";
@@ -35,36 +36,23 @@ public class IntroductionController {
 		model.addAttribute("account", account);
 		return "introduction.html";
 	}
-//	
-//	// 自己紹介編集画面を表示
-//	@GetMapping("//introduction/edit")
-//	public String getIntroductionEdit(HttpSession session,
-//						   		  	  Model model) {
-//		Account account = (Account)session.getAttribute("account");
-//		if (account==null) {
-//			return "redirect:/login";
-//		}
-//		model.addAttribute("account", account);
-//		return "introduction.html";
-//	}
 	
-//	// ログイン処理
-//	@PostMapping("/login")
-//	public String PostLogin(@RequestParam("email") String email,
-//							@RequestParam("password") String password,
-//							HttpSession session,
-//							Model model) {
-//		Account res = AccountDao.findByEmailAndPassword(email, password);
-//		// ログイン失敗 → セッションにエラー保存してログイン画面にリダイレクト
-//		if (res==null) {
-//			session.setAttribute("error", true);
-//			return "redirect:/login";
-//		}
-//		// 成功 → ユーザー情報をセッションに保存してブログ一覧へ
-//		else {
-//			session.setAttribute("account", res);
-//			model.addAttribute("type", "list");
-//			return "redirect:/blogList";
-//		}
-//	}
+	// 自己紹介編集処理
+	@PostMapping("/introduction/edit")
+	public String PostLogin(@RequestParam("introduction") String introduction,
+							HttpSession session,
+							Model model) {
+		//アカウント情報がないと、ログイン画面に進む
+		Account account = (Account)session.getAttribute("account");
+		if (account==null) {
+			return "redirect:/login";
+		}
+		
+		account.setIntroduction(introduction);
+		AccountDao.save(account);
+		
+		model.addAttribute("account", account);
+		model.addAttribute("edit", false);
+		return "redirect:/introduction?type=view";
+	}
 }

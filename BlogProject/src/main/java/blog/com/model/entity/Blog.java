@@ -15,6 +15,7 @@ public class Blog {
 	private String title;
 	private String content;
 	private String imgPath;
+	private int viewTimes;
 	private Timestamp createTm;
 	private Timestamp updateTm;
 	private Long authorId;
@@ -43,6 +44,12 @@ public class Blog {
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
+	public int getViewTimes() {
+		return viewTimes;
+	}
+	public void setViewTimes(int viewTimes) {
+		this.viewTimes = viewTimes;
+	}
 	public Timestamp getCreateTm() {
 		return createTm;
 	}
@@ -69,6 +76,7 @@ public class Blog {
 		this.title = title;
 		this.content = content;
 		this.imgPath = imgPath;
+		this.viewTimes = 0;
 		this.createTm = new Timestamp(System.currentTimeMillis());
 		this.updateTm = null;
 		this.authorId = authorId;

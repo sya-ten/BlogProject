@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ブログタイトル</title>
-    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
 </head>
 
 <body>
@@ -18,10 +18,10 @@
 		        </div>
         <div class="title">ブログシステム</div>
         <div class="menu">
-            <a th:href="@{/blogList}">ブログ一覧</a>
+            <a th:href="@{/blogList?rank=false}">ブログ一覧</a>
 			<a th:if="${editable}" th:href="@{/blogEdit?id={id}(id=${blog.blogId})}">ブログ編集</a>
-            <a th:href="@{/introduction}">自己紹介</a>
-            <a href="">ログアウト</a>
+            <a th:href="@{/introduction?type=view}">自己紹介</a>
+            <a th:href="@{/logout}">ログアウト</a>
         </div>
     </header>
 
@@ -38,29 +38,20 @@
     </div>
 
     <hr>
-    <form action="/login/process" method="post" class="comment inputForm">
-        <textarea name="" id=""></textarea>
-        <button type="submit">コメント</button>
+    <form action="/commentRegister" method="post" class="comment inputForm">
+        <textarea name="content"></textarea>
+        <button type="submit" name="blogId" th:value="${blog.blogId}">コメント</button>
     </form>
 
-    <div class="comment">
-        <div>
-            <span>コメント者</span>
-            <span>作成時期</span>
-        </div>
-        <div>1111111111111111111111111111111111111111111111
-            111111111111111111111111111111111111111111111111111111
-        </div>
-    </div>
-    <div class="comment">
-        <div>
-            <span>コメント者</span>
-            <span>作成時期</span>
-        </div>
-        <div>1111111111111111111111111111111111111111111111
-            111111111111111111111111111111111111111111111111111111
-        </div>
-    </div>
+	<div th:each="comment : ${comments}" class="comment">
+	    <div>
+	        <span th:text="${comment.commenterName}"></span>
+	        <span th:text="${#dates.format(comment.createTm, 'yyyy/MM/dd HH:mm')}"></span>
+	    </div>
+	    <div th:text="${comment.content}">
+	    </div>
+	</div>
+	
     <script src="./login.js"></script>
 </body>
 

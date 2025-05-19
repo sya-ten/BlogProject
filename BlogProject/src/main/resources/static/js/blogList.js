@@ -1,7 +1,9 @@
 const title = document.body.getAttribute("data-title");
+const rank = document.body.getAttribute("data-rank");
 console.log(title);
+console.log(rank);
 document.addEventListener("DOMContentLoaded", () => {
-    axios.get("/blogList/data?title="+title)
+    axios.get("/blogList/data?title="+title+"&rank="+rank)
         .then(response => {
             const blogs = response.data;
             const blogList = document.getElementById("blogList");
@@ -15,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span>${blog.title}</span>
                         <span>${blog.author}</span>
                         <span>${blog.createTm}</span>
+						<span>閲覧 ${blog.viewTimes} 回</span>
                     </div>
                     <div>${blog.content}</div>
                 `;
