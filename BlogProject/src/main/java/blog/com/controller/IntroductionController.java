@@ -12,9 +12,15 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class IntroductionController {
+
+    private final AccountLoginController accountLoginController;
 	// DAOを自動注入（DB操作用）
 	@Autowired
 	private AccountDao AccountDao;
+
+    IntroductionController(AccountLoginController accountLoginController) {
+        this.accountLoginController = accountLoginController;
+    }
 	
 	// 自己紹介画面を表示
 	@GetMapping("/introduction")
@@ -26,15 +32,21 @@ public class IntroductionController {
 		if (account==null) {
 			return "redirect:/login";
 		}
-		
+		String introduction = account.getIntroduction();
 		//編集モード
 		if (type.equals("edit")) {
 			model.addAttribute("edit", true);
+			//自己紹介内容を改行しない
+		    introduction = introduction.replace("<br/>", "\r\n");
 		}
 		//閲覧モード
 		else {
 			model.addAttribute("edit", false);
+			//自己紹介内容を改行する
+		    introduction = introduction.replace("\r\n", "<br/>");
 		}
+		account.setIntroduction(introduction);
+		
 		model.addAttribute("account", account);
 		return "introduction.html";
 	}

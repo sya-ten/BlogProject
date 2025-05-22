@@ -270,3 +270,10 @@ a {
     mask-repeat: no-repeat;
     mask-position: center;
 }
+
+.introduction {
+     width: 80%;
+     height: 200px;
+     margin: 0 auto;
+     margin-top: 30px;
+ }

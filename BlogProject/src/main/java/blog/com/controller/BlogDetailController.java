@@ -80,8 +80,11 @@ public class BlogDetailController {
 			LocalDateTime updateTm = blog.getUpdateTm().toLocalDateTime();
 			updateTmStr = updateTm.format(formatter);
 		}
+		//ブログ内容を改行する
+		String content = blog.getContent();
+		content = content.replace("\r\n", "<br/>");
 		//ブログviewModelに変換する
-		BlogModel blogModel = new BlogModel(blogId, blog.getTitle(), blog.getContent(), blog.getImgPath(), blog.getViewTimes(), createTmStr, updateTmStr);
+		BlogModel blogModel = new BlogModel(blogId, blog.getTitle(), content, blog.getImgPath(), blog.getViewTimes(), createTmStr, updateTmStr);
 		account = accountDao.findByAccountId(blog.getAuthorId());
 		
 		model.addAttribute("blog", blogModel);
@@ -93,7 +96,7 @@ public class BlogDetailController {
 		for (Comment comment : comments) {
 			Account commenter = accountDao.findByAccountId(comment.getCommenterId());
 			String commenterName = commenter.getUsername();
-			commentModels.add(new CommentModel(comment.getCommentId(),comment.getContent(),commenterName,commenter.getCreateTm()));
+			commentModels.add(new CommentModel(comment.getCommentId(),comment.getContent(),commenterName,comment.getCreateTm()));
 		}
 			
 		model.addAttribute("comments", commentModels);

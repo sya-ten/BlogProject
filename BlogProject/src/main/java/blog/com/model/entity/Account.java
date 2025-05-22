@@ -62,6 +62,7 @@ public class Account {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.introduction = "";
 		this.createTm = new Timestamp(System.currentTimeMillis());
 	}
 }

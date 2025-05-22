@@ -35,7 +35,7 @@
 		            <span th:text="'更新時期: '+${blog.updateTm}"></span>
 		        </p>
 		        <img th:src="${blog.imgPath}">
-		        <p  th:text="${blog.content}"></p>
+		        <div  th:utext="${blog.content}"></div>
 				<div class="like-img" onclick="like()"></div>
 		    </div>
 
