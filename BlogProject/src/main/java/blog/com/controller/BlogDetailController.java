@@ -60,6 +60,7 @@ public class BlogDetailController {
 			return "redirect:/login";
 		}
 		
+		model.addAttribute("account", account);
 		//ブログを取得する
 		Blog blog = blogDao.findByBlogId(blogId);
 		//登録したアカウントはこのブログの作者と同じ人の場合、ブログ編集ボタンを見えるようにする
@@ -85,10 +86,10 @@ public class BlogDetailController {
 		content = content.replace("\r\n", "<br/>");
 		//ブログviewModelに変換する
 		BlogModel blogModel = new BlogModel(blogId, blog.getTitle(), content, blog.getImgPath(), blog.getViewTimes(), createTmStr, updateTmStr);
-		account = accountDao.findByAccountId(blog.getAuthorId());
+		Account author = accountDao.findByAccountId(blog.getAuthorId());
 		
 		model.addAttribute("blog", blogModel);
-		model.addAttribute("account", account);
+		model.addAttribute("author", author);
 		//コメントListを取得する
 		List<Comment> comments = commentDao.findByBlogId(blogId);
 		//コメントviewModelに変換する

@@ -90,7 +90,7 @@ public class BlogEditController {
 		// 更新処理
 		if ("update".equals(action)) {
 			//写真保存パスを設定する
-			String uploadDir = "src/main/resources/static/upload/";
+			String uploadDir = "upload/";
 			String fileName = System.currentTimeMillis() + "_" + img_path.getOriginalFilename();
 			fileName = fileName.replace(" ", "");
 			Path filePath = Paths.get(uploadDir, fileName);
