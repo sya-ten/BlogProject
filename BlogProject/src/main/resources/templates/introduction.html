@@ -28,8 +28,8 @@
     <h2>自己紹介</h2>
 
     <form th:action="@{/introduction/edit}" method="post"  class="inputForm">
-        <div id="introduction" th:if="${edit==false}" class="introduction" th:utext="${account.introduction}"></div>
-        <textarea th:if="${edit}" name="introduction" cols="30" rows="10" th:text="${account.introduction}"></textarea>
+        <p id="introduction" th:if="${edit==false}" class="introduction" th:text="${account.introduction}"></p>
+        <textarea th:if="${edit}" name="introduction" cols="30" rows="10"></textarea>
 		<button th:if="${edit}" type="submit">確認</button>
 		<a th:if="${edit==false}" th:href="@{'/introduction?type=edit'}">
 		      <button type="button">編集</button>
@@ -39,7 +39,12 @@
     <script th:src="@{js/introduction.js}"></script>
 </body>
 <style>
-
+    .introduction {
+        width: 50%;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
 </style>
 
 </html>

@@ -37,7 +37,7 @@ public class BlogListController {
 
 	// ブログ一覧を表示
 	@GetMapping("/blogList")
-	public String getBlogList(@RequestParam(value = "rank", required = false) Boolean rank,
+	public String getBlogList(@RequestParam("rank") Boolean rank,
 							  HttpSession session,
 							  Model model) {
 		//アカウント情報がないと、ログイン画面に進む
@@ -52,7 +52,7 @@ public class BlogListController {
 	
 	// ブログ検索結果を表示
 	@GetMapping("/search")
-	public String getBlogSearch(@RequestParam(value = "rank", required = false) Boolean rank,
+	public String getBlogSearch(@RequestParam("rank") Boolean rank,
 								@RequestParam("title") String title,
 							    HttpSession session,
 								Model model) {
@@ -71,8 +71,8 @@ public class BlogListController {
 	// ブログ一覧初期化
 	@GetMapping("/blogList/data")
 	@ResponseBody
-	public Object getBlogListData(@RequestParam(value = "rank", required = false) Boolean rank,
-								  @RequestParam(value = "title", required = false) String title,
+	public Object getBlogListData(@RequestParam("rank") Boolean rank,
+								  @RequestParam("title") String title,
 								  HttpSession session) {
 		//アカウント情報がないと、ログイン画面に進む
 		Account account = (Account)session.getAttribute("account");
@@ -102,11 +102,7 @@ public class BlogListController {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDateTime createTm = blog.getCreateTm().toLocalDateTime();
 			String createTmStr = createTm.format(formatter);
-			String content = blog.getContent();
-			if (content.length()>=80) {
-				content = content.substring(0, 79);
-			}
-			arr.add(new RowModel(blog.getBlogId(), blog.getTitle(), content, blog.getViewTimes(), createTmStr, username));
+			arr.add(new RowModel(blog.getBlogId(), blog.getTitle(), blog.getContent(), blog.getViewTimes(), createTmStr, username));
 		}
 		return arr;
 	}

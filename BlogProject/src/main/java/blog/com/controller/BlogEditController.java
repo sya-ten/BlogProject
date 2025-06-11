@@ -106,7 +106,6 @@ public class BlogEditController {
 			blog.setUpdateTm(new Timestamp(System.currentTimeMillis()));
 			//ブログ情報をテーブルに更新する
 	        blogDao.save(blog);
-	        return "redirect:/blog/" + blogId;
 	    } 
 		//　削除処理
 		else if ("delete".equals(action)) {
@@ -115,6 +114,6 @@ public class BlogEditController {
 			//sessionにブログ情報をクリアする
 			session.removeAttribute("blog");
 	    }
-		return "redirect:/blogList";
+        return "redirect:/blogList";
 	}
 }
