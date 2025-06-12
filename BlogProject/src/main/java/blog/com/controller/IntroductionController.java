@@ -27,12 +27,14 @@ public class IntroductionController {
 			return "redirect:/login";
 		}
 		
+		//編集モード
 		if (type.equals("edit")) {
 			model.addAttribute("edit", true);
-		}else {
+		}
+		//閲覧モード
+		else {
 			model.addAttribute("edit", false);
 		}
-		
 		model.addAttribute("account", account);
 		return "introduction.html";
 	}
@@ -49,6 +51,7 @@ public class IntroductionController {
 		}
 		
 		account.setIntroduction(introduction);
+		//アカウント情報をテーブルに保存する
 		AccountDao.save(account);
 		
 		model.addAttribute("account", account);
