@@ -26,6 +26,8 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class BlogEditController {
+
+    private final BlogRegisterController blogRegisterController;
 	// DAOを自動注入（DB操作用）
 	@Autowired
 	private BlogDao blogDao;
@@ -33,6 +35,10 @@ public class BlogEditController {
 	@Autowired
 	private AccountDao AccountDao;
 
+    BlogEditController(BlogRegisterController blogRegisterController) {
+        this.blogRegisterController = blogRegisterController;
+    }
+	
 	// ブログ編集画面を表示
 	@GetMapping("/blogEdit")
 	public String getBlogEdit(@RequestParam("id") Long id,
@@ -44,20 +50,17 @@ public class BlogEditController {
 			return "redirect:/login";
 		}
 		
-		//ブログを取得する
 		Blog blog = blogDao.findByBlogId(id);
+		
 		session.setAttribute("blog", blog);
-		//ブログ作成日をテーブル様式から変換する
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDateTime createTm = blog.getCreateTm().toLocalDateTime();
 		String createTmStr = createTm.format(formatter);
-		//ブログ更新日をテーブル様式から変換する
 		String updateTmStr = "";
 		if (blog.getUpdateTm()!=null) {
 			LocalDateTime updateTm = blog.getUpdateTm().toLocalDateTime();
 			updateTmStr = updateTm.format(formatter);
 		}
-		//ブログviewModelに変換する
 		BlogModel blogModel = new BlogModel(id, blog.getTitle(), blog.getContent(), blog.getImgPath(), blog.getViewTimes(), createTmStr, updateTmStr);
 		model.addAttribute("blog", blogModel);
 		
@@ -71,47 +74,32 @@ public class BlogEditController {
 							   @RequestParam("img_path") MultipartFile img_path,
 							   @RequestParam("content") String content,
 							   HttpSession session) throws IOException {
-		//アカウント情報がないと、ログイン画面に進む
-		Account account = (Account)session.getAttribute("account");
-		if (account==null) {
-			return "redirect:/login";
-		}
-		
-		//ブログを取得する
-		Blog blog = (Blog)session.getAttribute("blog");
-		//登録したアカウントはこのブログの作者と違う人の場合、ログイン画面に進む
-		Long blogId = blog.getBlogId();
-		if (!blog.getAuthorId().equals(account.getAccountId())) {
-			//sessionをクリアする
-			session.invalidate();
-			return "redirect:/login";
-		}
+		Account account = (Account) session.getAttribute("account");
 		
 		// 更新処理
 		if ("update".equals(action)) {
-			//写真保存パスを設定する
+			Blog blog = (Blog)session.getAttribute("blog");
 			String uploadDir = "src/main/resources/static/upload/";
 			String fileName = System.currentTimeMillis() + "_" + img_path.getOriginalFilename();
 			fileName = fileName.replace(" ", "");
 			Path filePath = Paths.get(uploadDir, fileName);
-			//写真を保存する
 	        Files.copy(img_path.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 	        String imgPath = "/upload/" + fileName;
-	        //ブログ情報を変更する
 			blog.setTitle(title);
 			if (!img_path.getOriginalFilename().equals("")) {
 				blog.setImgPath(imgPath);
 			}
 			blog.setContent(content);
 			blog.setUpdateTm(new Timestamp(System.currentTimeMillis()));
-			//ブログ情報をテーブルに更新する
 	        blogDao.save(blog);
 	    } 
 		//　削除処理
 		else if ("delete".equals(action)) {
-			//テーブルに削除する
-			blogDao.deleteByBlogId(blogId);
-			//sessionにブログ情報をクリアする
+			Blog blog = (Blog)session.getAttribute("blog");
+			Long blogId = blog.getBlogId();
+			if (blog.getAuthorId().equals(account.getAccountId())) {
+				blogDao.deleteByBlogId(blogId);
+			}
 			session.removeAttribute("blog");
 	    }
         return "redirect:/blogList";

@@ -23,11 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import blog.com.model.dao.AccountDao;
 import blog.com.model.dao.BlogDao;
-import blog.com.model.dao.BlogLikeDao;
 import blog.com.model.dao.CommentDao;
 import blog.com.model.entity.Account;
 import blog.com.model.entity.Blog;
-import blog.com.model.entity.BlogLike;
 import blog.com.model.entity.BlogModel;
 import blog.com.model.entity.Comment;
 import blog.com.model.entity.CommentModel;
@@ -45,9 +43,6 @@ public class BlogDetailController {
 	// DAOを自動注入（DB操作用）
 	@Autowired
 	private CommentDao commentDao;
-	// DAOを自動注入（DB操作用）
-	@Autowired
-	private BlogLikeDao blogLikeDao;
 	
 	// ブログ詳細を表示
 	@GetMapping("/blog/{blogId}")
@@ -60,35 +55,29 @@ public class BlogDetailController {
 			return "redirect:/login";
 		}
 		
-		//ブログを取得する
 		Blog blog = blogDao.findByBlogId(blogId);
-		//登録したアカウントはこのブログの作者と同じ人の場合、ブログ編集ボタンを見えるようにする
 		if (account.getAccountId().equals(blog.getAuthorId())) {
 			model.addAttribute("editable", true);
 		} 
-		//閲覧回数+1、保存
 		blog.setViewTimes(blog.getViewTimes()+1);
 		blogDao.save(blog);
 		session.setAttribute("blog", blog);
-		//ブログ作成日をテーブル様式から変換する
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDateTime createTm = blog.getCreateTm().toLocalDateTime();
 		String createTmStr = createTm.format(formatter);
-		//ブログ更新日をテーブル様式から変換する
 		String updateTmStr = "";
 		if (blog.getUpdateTm()!=null) {
 			LocalDateTime updateTm = blog.getUpdateTm().toLocalDateTime();
 			updateTmStr = updateTm.format(formatter);
 		}
-		//ブログviewModelに変換する
 		BlogModel blogModel = new BlogModel(blogId, blog.getTitle(), blog.getContent(), blog.getImgPath(), blog.getViewTimes(), createTmStr, updateTmStr);
 		account = accountDao.findByAccountId(blog.getAuthorId());
 		
 		model.addAttribute("blog", blogModel);
 		model.addAttribute("account", account);
-		//コメントListを取得する
+		
 		List<Comment> comments = commentDao.findByBlogId(blogId);
-		//コメントviewModelに変換する
 		ArrayList<CommentModel> commentModels = new ArrayList<CommentModel>();
 		for (Comment comment : comments) {
 			Account commenter = accountDao.findByAccountId(comment.getCommenterId());
@@ -97,13 +86,6 @@ public class BlogDetailController {
 		}
 			
 		model.addAttribute("comments", commentModels);
-		//いいね情報を取得する
-		List<BlogLike> res = blogLikeDao.findByBlogIdAndLikerId(blogId, account.getAccountId());
-		if (res.size()==0) {
-			model.addAttribute("blogLike", false);
-		}else {
-			model.addAttribute("blogLike", true);
-		}
 		
 	    return "blog.html";
 	}

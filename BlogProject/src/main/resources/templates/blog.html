@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ブログタイトル</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" />
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
-<body th:data-blogLike="${blogLike}" th:data-liker_id="${account.accountId}" th:data-blog_id="${blog.blogId}">
+<body>
     <header>
 		<div class="searchBar">
 					<form th:action="@{/search}" method="get">
@@ -28,16 +27,15 @@
 
     <h2 th:text="${blog.title}"></h2>
 	
-	<div class="content" style="position: relative;">
-		        <p class="subtitle">
-		            <span th:text="'著者: '+${account.username}"></span>
-		            <span th:text="'作成時期: '+${blog.createTm}"></span>
-		            <span th:text="'更新時期: '+${blog.updateTm}"></span>
-		        </p>
-		        <img th:src="${blog.imgPath}">
-		        <p  th:text="${blog.content}"></p>
-				<div class="like-img" onclick="like()"></div>
-		    </div>
+    <div class="content">
+        <p class="subtitle">
+            <span th:text="'著者: '+${account.username}"></span>
+            <span th:text="'作成時期: '+${blog.createTm}"></span>
+            <span th:text="'更新時期: '+${blog.updateTm}"></span>
+        </p>
+        <img th:src="${blog.imgPath}">
+        <p  th:text="${blog.content}"></p>
+    </div>
 
     <hr>
     <form action="/commentRegister" method="post" class="comment inputForm">
@@ -54,7 +52,7 @@
 	    </div>
 	</div>
 	
-    <script th:src="@{/js/blog.js}"></script>
+    <script src="./login.js"></script>
 </body>
 
 </html>
