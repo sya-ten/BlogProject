@@ -56,7 +56,6 @@ public class CommentRegisterController {
 		}
 		
 		Comment comment = new Comment(content, account.getAccountId(), blogId);
-		//コメント情報をテーブルに保存する
 		commentDao.save(comment);
 		return "redirect:/blogList";
 	}

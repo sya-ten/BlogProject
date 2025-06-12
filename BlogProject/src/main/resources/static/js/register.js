@@ -1,6 +1,6 @@
-const form = document.getElementById("registerForm")
-const password = document.getElementById("password")
-const rePassword = document.getElementById("rePassword")
+let form = document.getElementById("registerForm")
+let password = document.getElementById("password")
+let rePassword = document.getElementById("rePassword")
 
 form.addEventListener("submit", function (e) {
     if (password.value !== rePassword.value) {

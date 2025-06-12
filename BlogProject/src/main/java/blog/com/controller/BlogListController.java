@@ -81,27 +81,28 @@ public class BlogListController {
 		}
 		
 		List<Blog> all;
-		//一覧モード
 		if (title.equals("null")) {
 			all = blogDao.findAll();
-		}
-		//検索モード
-		else {
+		}else {
 			all = blogDao.findByTitleContaining(title);
 		}
-		//ブログListが作成日の小さい順で並ぶ
+		
 		all.sort((a,b)->b.getCreateTm().compareTo(a.getCreateTm()));
-		//ランキングモード
-		if (rank==true) {
+		
+		if (!rank.equals("null")&&rank==true) {
 			all.sort((a,b)->Integer.compare(b.getViewTimes(), a.getViewTimes()));
 		}
-		//ブログRowModelに変換する
+		
+		
 		ArrayList<RowModel> arr = new ArrayList<RowModel>();
+		
 		for (Blog blog : all) {
 			String username = accountDao.findByAccountId(blog.getAuthorId()).getUsername();
+			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDateTime createTm = blog.getCreateTm().toLocalDateTime();
 			String createTmStr = createTm.format(formatter);
+			
 			arr.add(new RowModel(blog.getBlogId(), blog.getTitle(), blog.getContent(), blog.getViewTimes(), createTmStr, username));
 		}
 		return arr;
