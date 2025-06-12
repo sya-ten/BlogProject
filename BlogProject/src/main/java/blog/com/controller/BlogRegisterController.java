@@ -58,12 +58,15 @@ public class BlogRegisterController {
 		if (account==null) {
 			return "redirect:/login";
 		}
+		//写真保存パスを設定する
 		String uploadDir = "src/main/resources/static/upload/";
 		String fileName = System.currentTimeMillis() + "_" + img_path.getOriginalFilename();
 		fileName = fileName.replace(" ", "");
 		Path filePath = Paths.get(uploadDir, fileName);
+		//写真を保存する
         Files.copy(img_path.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         String imgPath = "/upload/" + fileName;
+        //ブログ情報をテーブルに保存する
 		blogDao.save(new Blog(title, content, imgPath, account.getAccountId()));
 		return "redirect:/blogList?rank=false";
 	}

@@ -1,7 +1,6 @@
 const title = document.body.getAttribute("data-title");
-const rank = document.body.getAttribute("data-rank");
-console.log(title);
-console.log(rank);
+const rank = document.body.getAttribute("data-rank") == "true";
+
 document.addEventListener("DOMContentLoaded", () => {
     axios.get("/blogList/data?title="+title+"&rank="+rank)
         .then(response => {
